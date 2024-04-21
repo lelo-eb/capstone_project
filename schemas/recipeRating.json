@@ -1,0 +1,27 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://reciperealm.com/recipeRating.schema.json",
+    "type": "object",
+    "properties": {
+      "recipe": {
+        "type": "string",
+        "ref": "recipe"
+      },
+      "user": {
+        "type": "string",
+        "ref": "user"
+      },
+      "rating": {
+        "type": "number",
+        "min": 1,
+        "max": 5
+      }
+    },
+    "additionalProperties": false,
+    "required": [
+      "recipe",
+      "user",
+      "rating"
+    ]
+  }
+  
