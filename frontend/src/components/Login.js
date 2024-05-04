@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
 
 const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const history = useHistory();
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -14,7 +14,7 @@ const Login = () => {
       // and handling the response
       
       // For now, just redirect to the dashboard page after successful login
-      history.push('/dashboard');
+      navigate('/dashboard'); // Use navigate instead of history.push
     } catch (err) {
       setError(err.message);
     }
@@ -52,3 +52,5 @@ const Login = () => {
 };
 
 export default Login;
+
+

@@ -46,16 +46,21 @@ const ShoppingList = () => {
   return (
     <div className="shopping-list">
       <h2>Shopping List</h2>
-      <ul>
-        {items.map(item => (
-          <li key={item.id}>
-            {item.name}
-            <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      {items.length === 0 ? (
+        <p>No shopping list at this time.</p>
+      ) : (
+        <ul>
+          {items.map(item => (
+            <li key={item.id}>
+              {item.name}
+              <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
 
 export default ShoppingList;
+

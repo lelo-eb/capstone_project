@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
 
   useEffect(() => {
     // Fetch list of recipes from the backend
@@ -22,18 +24,46 @@ const RecipeList = () => {
     fetchRecipes();
   }, []);
 
+  useEffect(() => {
+    // Filter recipes based on search term
+    const filtered = recipes.filter(recipe =>
+      recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredRecipes(filtered);
+  }, [recipes, searchTerm]);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
-    <div className="recipe-list">
-      <h2>Recipes</h2>
-      <ul>
-        {recipes.map(recipe => (
-          <li key={recipe.id}>
-            <Link to={`/recipes/${recipe.id}`}>{recipe.title}</Link>
-          </li>
+    <div className="dashboard">
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Search recipes"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+      </div>
+      <div className="recipe-list">
+        {filteredRecipes.map(recipe => (
+          <div key={recipe.id} className="recipe-card">
+            <Link to={`/recipes/${recipe.id}`}>
+              <div className="recipe-image">
+                <img src={recipe.picture} alt={recipe.title} />
+              </div>
+              <div className="recipe-details">
+                <h3>{recipe.title}</h3>
+                <p>By: {recipe.createdBy}</p>
+              </div>
+            </Link>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
 
 export default RecipeList;
+

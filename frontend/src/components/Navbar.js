@@ -4,21 +4,21 @@ import { Link } from 'react-router-dom';
 const Navbar = () => {
   return (
     <nav className="navbar">
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
+      <ul className="nav-list">
+        <li className="nav-item">
+          <Link to="/" className="nav-link">Home</Link>
         </li>
-        <li>
-          <Link to="/dashboard">Dashboard</Link>
+        <li className="nav-item">
+          <Link to="/recipes" className="nav-link">Recipes</Link>
         </li>
-        <li>
-          <Link to="/favorite-recipes">Favorite Recipes</Link>
+        <li className="nav-item">
+          <Link to="/favorite-recipes" className="nav-link">Favorite Recipes</Link>
         </li>
-        <li>
-          <Link to="/shopping-list">Shopping List</Link>
+        <li className="nav-item">
+          <Link to="/shopping-list" className="nav-link">Shopping List</Link>
         </li>
-        <li>
-          <Link to="/logout">Logout</Link>
+        <li className="nav-item">
+          <Link to="/logout" className="nav-link">Logout</Link>
         </li>
       </ul>
     </nav>

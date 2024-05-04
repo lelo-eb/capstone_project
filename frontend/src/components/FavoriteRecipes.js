@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 const FavoriteRecipes = () => {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
@@ -8,8 +7,12 @@ const FavoriteRecipes = () => {
     // Fetch favorite recipes from the backend API
     const fetchFavoriteRecipes = async () => {
       try {
-        const response = await axios.get('/favorites');
-        setFavoriteRecipes(response.data.favoriteRecipes);
+        const response = await fetch('/favorites');
+        if (!response.ok) {
+          throw new Error('Failed to fetch favorite recipes');
+        }
+        const data = await response.json();
+        setFavoriteRecipes(data.favoriteRecipes);
       } catch (error) {
         console.error('Error fetching favorite recipes:', error);
       }

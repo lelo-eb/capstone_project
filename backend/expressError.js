@@ -27,6 +27,14 @@ class ExpressError extends Error {
       super(message, 401);
     }
   }
+
+  /** 400 BAD REQUEST error. */
+
+class BadRequestError extends ExpressError {
+  constructor(message = "Bad Request") {
+    super(message, 400);
+  }
+}
   
   /** 403 BAD REQUEST error. */
   
