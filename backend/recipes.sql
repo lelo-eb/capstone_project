@@ -4,6 +4,7 @@
 DROP DATABASE recipes;
 CREATE DATABASE recipes;
 \connect recipes
+-- DROP TABLE shopping_list_items, shopping_lists, comments, favorites, ratings, recipes, users;
 
 \i recipes-schema.sql
 \i recipes-seed.sql

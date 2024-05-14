@@ -7,20 +7,20 @@ const RecipeList = () => {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
 
   useEffect(() => {
-    // Fetch list of recipes from the backend
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('/recipes');
+        const response = await fetch('http://localhost:5000/recipes');
         if (!response.ok) {
           throw new Error('Failed to fetch recipes');
         }
         const data = await response.json();
-        setRecipes(data.recipes);
+        console.log(data); // Check the fetched data
+        setRecipes(data.recipe); // Update to data.recipe
       } catch (error) {
         console.error(error);
       }
     };
-
+  
     fetchRecipes();
   }, []);
 
@@ -36,6 +36,10 @@ const RecipeList = () => {
     setSearchTerm(event.target.value);
   };
 
+  if (recipes.length === 0) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="dashboard">
       <div className="search-container">
@@ -48,7 +52,7 @@ const RecipeList = () => {
       </div>
       <div className="recipe-list">
         {filteredRecipes.map(recipe => (
-          <div key={recipe.id} className="recipe-card">
+          <div key={recipe.title} className="recipe-card"> {/* Assuming title is unique */}
             <Link to={`/recipes/${recipe.id}`}>
               <div className="recipe-image">
                 <img src={recipe.picture} alt={recipe.title} />
@@ -66,4 +70,5 @@ const RecipeList = () => {
 };
 
 export default RecipeList;
+
 

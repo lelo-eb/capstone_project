@@ -4,6 +4,14 @@ const Recipe = require('../models/recipe');
 
 const router = express.Router();
 
+router.get('/', async function (req, res, next) {
+  try {
+    const recipe = await Recipe.getAll(req.params.recipeId);
+    return res.json({ recipe });
+  } catch (err) {
+    return next(err);
+  }
+});
 router.post('/', async function (req, res, next) {
   try {
     const recipe = await Recipe.create(req.body);

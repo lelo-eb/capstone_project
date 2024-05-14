@@ -4,6 +4,14 @@ const ShoppingList = require('../models/shoppingList');
 
 const router = express.Router();
 
+router.get('/', async function (req, res, next) {
+  try {
+    const shoppingList = await ShoppingList.getAll(req.params.shoppingListId);
+    return res.json({ shoppingList });
+  } catch (err) {
+    return next(err);
+  }
+});
 router.post('/', async function (req, res, next) {
   try {
     const shoppingList = await ShoppingList.create(req.body);

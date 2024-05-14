@@ -25,22 +25,10 @@ class Recipe {
    *
    * Returns [{ id, title, description, ingredients, instructions, createdBy, createdAt, updatedAt }, ...]
    **/
-  static async findAll({ createdBy }) {
-    let query = `SELECT id, title, description, ingredients, instructions, created_by AS "createdBy", created_at AS "createdAt", updated_at AS "updatedAt"
-                 FROM recipes`;
-    const whereExpressions = [];
-    const queryValues = [];
-
-    if (createdBy !== undefined) {
-      queryValues.push(createdBy);
-      whereExpressions.push(`created_by = $${queryValues.length}`);
-    }
-
-    if (whereExpressions.length > 0) {
-      query += " WHERE " + whereExpressions.join(" AND ");
-    }
-
-    const recipesRes = await db.query(query, queryValues);
+  static async getAll() {
+    let query = `SELECT title FROM recipes`;
+  
+    const recipesRes = await db.query(query);
     return recipesRes.rows;
   }
 
