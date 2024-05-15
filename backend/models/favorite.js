@@ -8,6 +8,17 @@ class Favorite {
    *
    * Returns { id, recipeId, userId, createdAt, updatedAt }
    **/
+  static async getAll() {
+    let query = 
+    `SELECT recipes.title
+    FROM favorites
+    JOIN recipes 
+    ON favorites.recipeId = recipes.id`;
+  
+    const favoritesRes = await db.query(query);
+    return favoritesRes.rows;
+  }
+
   static async add({ recipeId, userId }) {
     // Check if the recipe is already in favorites for the user
     const existingFavorite = await db.query(

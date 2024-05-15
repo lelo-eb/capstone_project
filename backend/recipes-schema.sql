@@ -1,4 +1,3 @@
--- Create the users table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(20) UNIQUE NOT NULL,
@@ -10,8 +9,6 @@ CREATE TABLE users (
     bio TEXT,
     joinedOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- Create the recipes table
 CREATE TABLE recipes (
     id SERIAL PRIMARY KEY,
     title VARCHAR NOT NULL,
@@ -23,23 +20,17 @@ CREATE TABLE recipes (
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- Create the ratings table
 CREATE TABLE ratings (
     id SERIAL PRIMARY KEY,
     recipeId INTEGER REFERENCES recipes(id),
     userId INTEGER REFERENCES users(id),
     rating NUMERIC(2,1) NOT NULL CHECK (rating >= 1 AND rating <= 5)
 );
-
--- Create the favorites table
 CREATE TABLE favorites (
     id SERIAL PRIMARY KEY,
     recipeId INTEGER REFERENCES recipes(id),
     userId INTEGER REFERENCES users(id)
 );
-
--- Fix syntax error in comments table creation
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
     recipeId INTEGER REFERENCES recipes(id),
@@ -48,20 +39,11 @@ CREATE TABLE comments (
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
--- Fix syntax error in shopping_lists table creation
-CREATE TABLE shopping_lists (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR NOT NULL,
-    userId INTEGER REFERENCES users(id),
-    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create the shopping_list_items table
 CREATE TABLE shopping_list_items (
     id SERIAL PRIMARY KEY,
-    shoppingListId INTEGER REFERENCES shopping_lists(id),
+    userId INTEGER REFERENCES users(id),
     name VARCHAR NOT NULL,
-    quantity VARCHAR
+    quantity VARCHAR,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

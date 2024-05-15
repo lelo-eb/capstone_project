@@ -8,14 +8,11 @@ class ShoppingListItem {
    * data should be { shoppingListId }
    * Returns [{ id, shoppingListId, name, createdAt, updatedAt }, ...]
    **/
-  static async getAll({ shoppingListId }) {
-    const result = await db.query(
-      `SELECT id, shopping_list_id AS "shoppingListId", name, created_at AS "createdAt", updated_at AS "updatedAt"
-       FROM shopping_list_items
-       WHERE shopping_list_id = $1`,
-      [shoppingListId],
-    );
-    return result.rows;
+  static async getAll() {
+    let query = `SELECT name, quantity FROM shopping_list_items`;
+    
+    const shoppingListItemsRes = await db.query(query);
+    return shoppingListItemsRes.rows;
   }
 }
 

@@ -29,3 +29,11 @@ VALUES
   (2, 1),
   (3, 2),
   (4, 3);
+
+-- Insert test data for shopping list items
+INSERT INTO shopping_list_items (userId, name, quantity)
+VALUES
+  (1, 'Milk', '1 gallon'),
+  (1, 'Eggs', '1 dozen'),
+  (2, 'Bread', '1 loaf'),
+  (3, 'Apples', '6');

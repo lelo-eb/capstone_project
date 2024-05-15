@@ -7,12 +7,12 @@ const FavoriteRecipes = () => {
     // Fetch favorite recipes from the backend API
     const fetchFavoriteRecipes = async () => {
       try {
-        const response = await fetch('/favorites');
+        const response = await fetch('http://localhost:5000/favorites');
         if (!response.ok) {
           throw new Error('Failed to fetch favorite recipes');
         }
         const data = await response.json();
-        setFavoriteRecipes(data.favoriteRecipes);
+        setFavoriteRecipes(data.favorite);
       } catch (error) {
         console.error('Error fetching favorite recipes:', error);
       }

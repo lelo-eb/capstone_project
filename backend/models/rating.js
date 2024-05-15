@@ -9,6 +9,13 @@ class Rating {
    *
    * Returns { id, recipeId, userId, rating, createdAt, updatedAt }
    **/
+  static async getAll() {
+    let query = `SELECT rating FROM ratings`;
+  
+    const ratingsRes = await db.query(query);
+    return ratingsRes.rows;
+  }
+  
   static async rate({ recipeId, userId, rating }) {
     // Check if the user has already rated the recipe
     const existingRating = await db.query(

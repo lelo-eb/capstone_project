@@ -12,7 +12,7 @@ const recipes = require("./routes/recipes");
 const ratings = require("./routes/ratings");
 const favorites = require("./routes/favorites");
 const comments = require("./routes/comments");
-const shoppingLists = require("./routes/shoppingList");
+const shoppingListItems = require("./routes/shoppingListItems");
 
 const morgan = require("morgan");
 
@@ -27,7 +27,7 @@ app.use("/recipes", recipes);
 app.use("/ratings", ratings);
 app.use("/favorites", favorites);
 app.use("/comments", comments);
-app.use("/shopping-list", shoppingLists);
+app.use("/shoppingListItems", shoppingListItems);
 app.get("/", (req, res) => {
   return res.json({ message: "Welcome to Recipe Sharing API" });
 });
