@@ -10,7 +10,7 @@ const RecipeDetail = ({ onAddToShoppingList }) => {
     // Fetch recipe data from the backend using recipeId
     const fetchRecipe = async () => {
       try {
-        const response = await fetch(`/recipes/${recipeId}`);
+        const response = await fetch(`http://localhost:5000/recipes/${recipeId}`);
         if (!response.ok) {
           throw new Error('Failed to fetch recipe');
         }

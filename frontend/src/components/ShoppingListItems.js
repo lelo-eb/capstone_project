@@ -7,7 +7,7 @@ const ShoppingListItems = () => {
     // Fetch shopping list items from the backend
     const fetchShoppingListItems = async () => {
       try {
-        const response = await fetch('http://localhost:5000/shoppingListItems'); // Assuming this is the correct endpoint
+        const response = await fetch('http://localhost:5000/shoppingListItems');
         if (!response.ok) {
           throw new Error('Failed to fetch shopping list items');
         }
@@ -24,7 +24,7 @@ const ShoppingListItems = () => {
   const handleDeleteItem = async (itemId) => {
     // Delete the item from the backend
     try {
-      const response = await fetch(`/shoppingListItems/${itemId}`, {
+      const response = await fetch(`http://localhost:5000/shoppingListItems/${itemId}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
