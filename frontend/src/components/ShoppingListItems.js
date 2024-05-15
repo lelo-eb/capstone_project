@@ -12,7 +12,7 @@ const ShoppingListItems = () => {
           throw new Error('Failed to fetch shopping list items');
         }
         const data = await response.json();
-        setItems(data.item);
+        setItems(data.items); // Corrected: use data.items instead of data.item
       } catch (error) {
         console.error(error);
       }

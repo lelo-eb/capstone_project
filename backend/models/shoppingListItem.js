@@ -1,20 +1,31 @@
-// models/shoppingListItem.js
 const db = require("../db");
-const { NotFoundError } = require("../expressError");
 
 class ShoppingListItem {
-  /** Get all items in a shopping list.
-   *
-   * data should be { shoppingListId }
-   * Returns [{ id, shoppingListId, name, createdAt, updatedAt }, ...]
-   **/
   static async getAll() {
-    let query = `SELECT name, quantity FROM shopping_list_items`;
+    const query = `SELECT * FROM shopping_list_items`;
     
     const shoppingListItemsRes = await db.query(query);
     return shoppingListItemsRes.rows;
   }
+
+  /** Create a new item in the shopping list.
+   *
+   * data should be { name, quantity }
+   * Returns { id, name, quantity, createdAt, updatedAt }
+   **/
+  static async create({ name, quantity }) {
+    const query = `
+      INSERT INTO shopping_list_items (name, quantity)
+      VALUES ($1, $2)
+      RETURNING id, name, quantity`;
+
+    const result = await db.query(query, [name, quantity]);
+    const newItem = result.rows[0];
+
+    return newItem;
+  }
 }
 
 module.exports = ShoppingListItem;
+
 

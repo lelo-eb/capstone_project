@@ -1,11 +1,11 @@
-// RecipeDetail.js
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './RecipeDetail.css';
+import AddToShoppingListForm from './AddToShoppingListForm';
 
 const RecipeDetail = () => {
   const [recipe, setRecipe] = useState(null);
+  const [showForm, setShowForm] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -24,6 +24,39 @@ const RecipeDetail = () => {
   
     fetchRecipe();
   }, [id]);
+
+  const handleAddToShoppingList = async (items) => {
+    try {
+      console.log('Data sent:', items);
+      console.log('Data type:', typeof items);
+  
+      const response = await fetch('http://localhost:5000/shoppingListItems', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(items), // Convert items to JSON string
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to add items to shopping list');
+      }
+  
+      // Assuming the response contains the newly created item
+      const newItem = await response.json();
+      console.log('Added item to shopping list:', newItem);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAddToShoppingListClick = () => {
+    setShowForm(true);
+  };
+
+  const handleFormClose = () => {
+    setShowForm(false);
+  };
 
   if (!recipe) {
     return <div>Loading...</div>;
@@ -47,6 +80,16 @@ const RecipeDetail = () => {
           ))}
         </ul>
       </div>
+      {!showForm && (
+        <button onClick={handleAddToShoppingListClick}>Add items to shopping list</button>
+      )}
+      {showForm && (
+        <AddToShoppingListForm
+          ingredients={ingredientsArray}
+          onSubmit={handleAddToShoppingList}
+          onClose={handleFormClose}
+        />
+      )}
       <div className="recipe-description">
         <h3>Recipe Description:</h3>
         <p>{recipe.recipe_description}</p>

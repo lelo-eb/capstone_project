@@ -1,26 +1,27 @@
-// routes/shoppingListItemRoutes.js
 const express = require('express');
 const ShoppingListItem = require('../models/shoppingListItem');
 
 const router = express.Router();
 
+// GET all shopping list items
 router.get('/', async function (req, res, next) {
   try {
-    const item = await ShoppingListItem.getAll(req.params.shoppingListItemId);
-    return res.json({ item });
-  } catch (err) {
-    return next(err);
-  }
-});
-router.post('/', async function (req, res, next) {
-  try {
-    const item = await ShoppingListItem.create(req.body);
-    return res.status(201).json({ item });
+    const items = await ShoppingListItem.getAll();
+    return res.json({ items });
   } catch (err) {
     return next(err);
   }
 });
 
-// Add other shopping list item routes as needed
+// POST a new shopping list item
+router.post('/', async function (req, res, next) {
+  try {
+    const { name, quantity } = req.body;
+    const newItem = await ShoppingListItem.create({ name, quantity });
+    return res.status(201).json({ item: newItem });
+  } catch (err) {
+    return next(err);
+  }
+});
 
 module.exports = router;
