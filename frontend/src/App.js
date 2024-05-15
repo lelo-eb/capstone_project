@@ -7,7 +7,7 @@ import Login from './components/Login';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FavoriteRecipes from './components/FavoriteRecipes';
-import ShoppingList from './components/ShoppingList';
+import ShoppingListItems from './components/ShoppingListItems';
 import Logout from './components/Logout';
 import Error404 from './components/Error404';
 import './App.css';
@@ -23,7 +23,7 @@ function App() {
           <Route path="/recipes/:id" element={<RecipeDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/favorite-recipes" element={<FavoriteRecipes />} />
-          <Route path="/shopping-list" element={<ShoppingList />} />
+          <Route path="/shopping-list-items" element={<ShoppingListItems />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="*" element={<Error404 />} />
         </Routes>

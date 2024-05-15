@@ -15,7 +15,7 @@ const Navbar = () => {
           <Link to="/favorite-recipes" className="nav-link">Favorite Recipes</Link>
         </li>
         <li className="nav-item">
-          <Link to="/shopping-list" className="nav-link">Shopping List</Link>
+          <Link to="/shopping-list-items" className="nav-link">Shopping List Items</Link>
         </li>
         <li className="nav-item">
           <Link to="/logout" className="nav-link">Logout</Link>

@@ -1,32 +1,30 @@
 import React, { useState, useEffect } from 'react';
 
-const ShoppingList = () => {
+const ShoppingListItems = () => {
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Fetch shopping list items from the backend
-    const fetchShoppingList = async () => {
+    const fetchShoppingListItems = async () => {
       try {
-        const response = await fetch('/shopping-list');
+        const response = await fetch('http://localhost:5000/shoppingListItems'); // Assuming this is the correct endpoint
         if (!response.ok) {
           throw new Error('Failed to fetch shopping list items');
         }
         const data = await response.json();
-        setItems(data.items);
-        setLoading(false);
+        setItems(data.item);
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchShoppingList();
+    fetchShoppingListItems();
   }, []);
 
   const handleDeleteItem = async (itemId) => {
     // Delete the item from the backend
     try {
-      const response = await fetch(`/shopping-list/${itemId}`, {
+      const response = await fetch(`/shoppingListItems/${itemId}`, {
         method: 'DELETE',
       });
       if (!response.ok) {
@@ -39,20 +37,16 @@ const ShoppingList = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="shopping-list">
-      <h2>Shopping List</h2>
+      <h2>Shopping List Items</h2>
       {items.length === 0 ? (
-        <p>No shopping list at this time.</p>
+        <p>No shopping list items at this time.</p>
       ) : (
         <ul>
           {items.map(item => (
             <li key={item.id}>
-              {item.name}
+              <strong>{item.name}</strong>: {item.quantity}
               <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
             </li>
           ))}
@@ -62,5 +56,6 @@ const ShoppingList = () => {
   );
 };
 
-export default ShoppingList;
+export default ShoppingListItems;
+
 
