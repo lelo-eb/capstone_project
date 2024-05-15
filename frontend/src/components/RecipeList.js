@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import './RecipeList.css'; // Import the CSS file
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
@@ -27,7 +28,7 @@ const RecipeList = () => {
   useEffect(() => {
     // Filter recipes based on search term
     const filtered = recipes.filter(recipe =>
-      recipe.title.toLowerCase().includes(searchTerm.toLowerCase())
+      recipe.recipe_title.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredRecipes(filtered);
   }, [recipes, searchTerm]);
@@ -50,25 +51,32 @@ const RecipeList = () => {
           onChange={handleSearchChange}
         />
       </div>
-      <div className="recipe-list">
-        {filteredRecipes.map(recipe => (
-          <div key={recipe.title} className="recipe-card"> {/* Assuming title is unique */}
-            <Link to={`/recipes/${recipe.id}`}>
-              <div className="recipe-image">
-                <img src={recipe.picture} alt={recipe.title} />
-              </div>
-              <div className="recipe-details">
-                <h3>{recipe.title}</h3>
-                <p>By: {recipe.createdBy}</p>
-              </div>
-            </Link>
-          </div>
-        ))}
+      <div className="recipe-grid">
+        {filteredRecipes.length === 0 ? (
+          <p>Sorry, there are no results matching your search.</p>
+        ) : (
+          filteredRecipes.map(recipe => (
+            <div key={recipe.recipe_title} className="recipe-card">
+              <Link to={`/recipes/${recipe.recipe_id}`} style={{ textDecoration: 'none' }}>
+                <div className="recipe-image">
+                  <img src={recipe.recipe_picture} alt={recipe.recipe_title} />
+                </div>
+                <div className="recipe-details">
+                  <h3>{recipe.recipe_title}</h3>
+                  <p>By: {recipe.created_by_username}</p>
+                  <p>Average Rating: {typeof recipe.average_rating === 'string' ? parseFloat(recipe.average_rating).toFixed(2) : 'None'}</p>
+                </div>
+              </Link>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
 };
 
 export default RecipeList;
+
+
 
 

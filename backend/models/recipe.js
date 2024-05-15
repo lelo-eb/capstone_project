@@ -26,27 +26,61 @@ class Recipe {
    * Returns [{ id, title, description, ingredients, instructions, createdBy, createdAt, updatedAt }, ...]
    **/
   static async getAll() {
-    let query = `SELECT title FROM recipes`;
-  
+    const query = `
+    SELECT
+    r.id AS recipe_id,
+    r.title AS recipe_title,
+    r.description AS recipe_description,
+    r.ingredients AS recipe_ingredients,
+    r.instructions AS recipe_instructions,
+    r.picture AS recipe_picture,
+    r.createdBy AS recipe_createdBy,
+    r.createdAt AS recipe_createdAt,
+    r.updatedAt AS recipe_updatedAt,
+    u.username AS created_by_username,
+    AVG(ra.rating) AS average_rating
+    FROM
+    recipes r
+    LEFT JOIN
+    ratings ra ON r.id = ra.recipeId
+    LEFT JOIN
+    users u ON r.createdBy = u.id
+    GROUP BY
+    r.id,
+    u.username;
+    `;
     const recipesRes = await db.query(query);
     return recipesRes.rows;
   }
-
-  /** Given a recipe ID, return data about recipe.
-   *
-   * Returns { id, title, description, ingredients, instructions, createdBy, createdAt, updatedAt }
-   *   or throws NotFoundError if not found.
-   **/
-  static async getById(id) {
-    const recipeRes = await db.query(
-      `SELECT id, title, description, ingredients, instructions, created_by AS "createdBy", created_at AS "createdAt", updated_at AS "updatedAt"
-       FROM recipes
-       WHERE id = $1`,
-      [id],
-    );
-    const recipe = recipeRes.rows[0];
-    if (!recipe) throw new NotFoundError(`No recipe with ID: ${id}`);
-    return recipe;
+  static async findById(id) {
+    const query = `
+      SELECT
+        r.id AS recipe_id,
+        r.title AS recipe_title,
+        r.description AS recipe_description,
+        r.ingredients AS recipe_ingredients,
+        r.instructions AS recipe_instructions,
+        r.picture AS recipe_picture,
+        r.createdBy AS recipe_createdBy,
+        r.createdAt AS recipe_createdAt,
+        r.updatedAt AS recipe_updatedAt,
+        u.username AS created_by_username,
+        AVG(ra.rating) AS average_rating
+      FROM
+        recipes r
+      LEFT JOIN
+        ratings ra ON r.id = ra.recipeId
+      LEFT JOIN
+        users u ON r.createdBy = u.id
+      WHERE
+        r.id = $1
+      GROUP BY
+        r.id,
+        u.username;
+    `;
+    
+    const result = await db.query(query, [id]);
+    return result.rows[0];
   }
 }
 

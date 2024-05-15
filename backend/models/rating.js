@@ -10,10 +10,11 @@ class Rating {
    * Returns { id, recipeId, userId, rating, createdAt, updatedAt }
    **/
   static async getAll() {
-    let query = `SELECT rating FROM ratings`;
+    let query = 
+    `SELECT  * From ratings`;
   
-    const ratingsRes = await db.query(query);
-    return ratingsRes.rows;
+    const favoritesRes = await db.query(query);
+    return favoritesRes.rows;
   }
   
   static async rate({ recipeId, userId, rating }) {

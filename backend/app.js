@@ -28,6 +28,7 @@ app.use("/ratings", ratings);
 app.use("/favorites", favorites);
 app.use("/comments", comments);
 app.use("/shoppingListItems", shoppingListItems);
+
 app.get("/", (req, res) => {
   return res.json({ message: "Welcome to Recipe Sharing API" });
 });

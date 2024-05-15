@@ -1,0 +1,82 @@
+/* RecipeDetail.css */
+  .recipe-detail-container {
+    max-width: 800px;
+    margin: 20px auto; /* Add more space between content and navbar */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recipe-title {
+    font-size: 32px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .recipe-image {
+    width: 100%; /* Make image responsive */
+    max-height: 300px; /* Adjust max height for better display */
+    object-fit: contain; /* Display the entire image */
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .ingredients-list {
+    margin-bottom: 30px;
+  }
+  
+  .ingredients-list li {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .recipe-description {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  .recipe-instructions {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  .recipe-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .recipe-info h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .recipe-info p {
+    font-size: 18px;
+    color: #666;
+  }
+  
+  .rating {
+    display: flex;
+    align-items: center;
+  }
+  
+  .rating p {
+    margin-left: 10px;
+    font-size: 18px;
+    color: #666;
+  }
+  
+  .created-by {
+    font-style: italic;
+    font-size: 18px;
+    color: #666;
+  }   
+  
