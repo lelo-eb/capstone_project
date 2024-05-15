@@ -14,16 +14,19 @@ const AddToShoppingListForm = ({ ingredients, onSubmit, onClose }) => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const itemsArray = Object.entries(formValues)
-    .filter(([_, value]) => value) // Remove items with quantity of 0
-    .map(([name, quantity]) => ({ name, quantity }));
-  if (itemsArray.length > 0) {
-    onSubmit(itemsArray);
-    onClose(); // Close the form after submission
-  } else {
-    alert('Please fill out all fields before submitting.');
-  }
+    e.preventDefault();
+    const itemsArray = Object.entries(formValues)
+        .filter(([_, value]) => value !== '0') // Filter out items with quantity of 0
+        .map(([name, quantity]) => ({
+            "name": name,
+            "quantity": quantity
+        }));
+    if (itemsArray.length > 0) {
+        onSubmit({ shoppingListItems: itemsArray }); // Wrap itemsArray in an object with key shoppingListItems
+        onClose(); // Close the form after submission
+    } else {
+        alert('Please fill out all fields before submitting.');
+    }
 };
 
   return (
