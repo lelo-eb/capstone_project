@@ -10,7 +10,7 @@ class Favorite {
    **/
   static async getAll() {
     let query = 
-    `SELECT recipes.title
+    `SELECT favorites.id, recipes.title
     FROM favorites
     JOIN recipes 
     ON favorites.recipeId = recipes.id`;

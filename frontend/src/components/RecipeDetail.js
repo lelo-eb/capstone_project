@@ -21,7 +21,7 @@ const RecipeDetail = () => {
         console.error(error);
       }
     };
-  
+
     fetchRecipe();
   }, [id]);
 
@@ -47,7 +47,7 @@ const RecipeDetail = () => {
     } catch (error) {
         console.error(error);
     }
-};
+  };
 
   const handleAddToShoppingListClick = () => {
     setShowForm(true);
@@ -80,7 +80,7 @@ const RecipeDetail = () => {
         </ul>
       </div>
       {!showForm && (
-        <button onClick={handleAddToShoppingListClick}>Add items to shopping list</button>
+        <button className="add-to-shopping-list-button" onClick={handleAddToShoppingListClick}>Add items to shopping list</button>
       )}
       {showForm && (
         <AddToShoppingListForm

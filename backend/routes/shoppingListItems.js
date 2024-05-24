@@ -13,27 +13,34 @@ router.get('/', async function (req, res, next) {
   }
 });
 
-// POST a new shopping list item
+// POST new shopping list items
 router.post('/', async function (req, res, next) {
   try {
-    const items = req.body.shoppingListItems; // Extract the array of items from the request body
-
-    // Ensure that items is an array
+    const items = req.body.shoppingListItems;
     if (!Array.isArray(items)) {
       return res.status(400).json({ error: 'Invalid request body format' });
     }
-
-    // Create a new array to store the results of item creations
     const createdItems = [];
-
-    // Loop through each item in the array and create it
     for (const item of items) {
       const { name, quantity } = item;
       const newItem = await ShoppingListItem.create({ name, quantity });
       createdItems.push(newItem);
     }
+    return res.status(201).json({ items: createdItems });
+  } catch (err) {
+    return next(err);
+  }
+});
 
-    return res.status(201).json({ items: createdItems }); // Return an array of created items
+// DELETE a shopping list item
+router.delete('/:id', async function (req, res, next) {
+  try {
+    const { id } = req.params;
+    const deletedItem = await ShoppingListItem.delete(id);
+    if (!deletedItem) {
+      return res.status(404).json({ error: 'Item not found' });
+    }
+    return res.status(200).json({ message: 'Item deleted', id: deletedItem.id });
   } catch (err) {
     return next(err);
   }

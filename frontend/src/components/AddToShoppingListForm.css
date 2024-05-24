@@ -1,0 +1,59 @@
+.add-to-shopping-list-form {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+  }
+  
+  .add-to-shopping-list-form h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .add-to-shopping-list-form label {
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .add-to-shopping-list-form input[type="text"] {
+    width: calc(100% - 10px);
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+  .add-to-shopping-list-form .form-button {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 10px; /* Add margin for spacing */
+  }
+  
+  .add-to-shopping-list-form .form-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .add-to-shopping-list-form .close-button {
+    background-color: #dc3545; /* Red color for close button */
+  }
+  
+  .add-to-shopping-list-form .close-button:hover {
+    background-color: #c82333;
+  }  

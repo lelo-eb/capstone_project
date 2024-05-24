@@ -1,0 +1,115 @@
+.shopping-list-items-container .shopping-list {
+    flex: 1;
+    padding-right: 10px; /* Add padding on the right side */
+  }
+  
+  .shopping-list-items-container .add-item-form {
+    flex: 1;
+    padding-left: 10px; /* Add padding on the left side */
+  }
+  
+  .shopping-list-items-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .shopping-list-items-container ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .shopping-list-items-container li {
+    font-size: 18px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .shopping-list-items-container li strong {
+    font-weight: bold;
+  }
+  
+  .shopping-list-items-container button {
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #dc3545;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .shopping-list-items-container button:hover {
+    background-color: #c82333;
+  }
+  
+  .shopping-list-items-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .shopping-list-items-container form div {
+    margin-bottom: 15px;
+  }
+  
+  .shopping-list-items-container label {
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .shopping-list-items-container input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .shopping-list-items-container input:focus {
+    outline: none;
+    border-color: #007BFF;
+  }
+  
+  .shopping-list-items-container form button {
+    align-self: flex-start;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .shopping-list-items-container form button:hover {
+    background-color: #0056b3;
+  }
+  
+  .shopping-list-items-container {
+    display: flex;
+    justify-content: space-between; /* Distribute items and form to the ends */
+    margin: 20px; /* Add margin around the container */
+  }
+  
+  .shopping-list {
+    flex: 1; /* Take remaining space */
+    margin-right: 10px; /* Add space between items and form */
+  }
+  
+  .add-item-form {
+    flex: 1; /* Take remaining space */
+    margin-left: 10px;
+    margin-right: 25px;
+  }   

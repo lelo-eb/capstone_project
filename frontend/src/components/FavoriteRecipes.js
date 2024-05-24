@@ -13,6 +13,9 @@ const FavoriteRecipes = () => {
         }
         const data = await response.json();
         setFavoriteRecipes(data.favorite);
+
+        // Log the favoriteRecipes array to verify the data
+        console.log(data.favorite);
       } catch (error) {
         console.error('Error fetching favorite recipes:', error);
       }
@@ -26,7 +29,7 @@ const FavoriteRecipes = () => {
       <h2>Favorite Recipes</h2>
       <ul>
         {favoriteRecipes.map((recipe) => (
-          <li key={recipe.id}>
+          <li key={recipe.id}> {/* Add key prop */}
             <h3>{recipe.title}</h3>
             <p>{recipe.description}</p>
             {/* Render other details of the recipe */}

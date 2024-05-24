@@ -1,45 +1,50 @@
 import React, { useState } from 'react';
+import './AddToShoppingListForm.css';
 
 const AddToShoppingListForm = ({ ingredients, onSubmit, onClose }) => {
   const [formValues, setFormValues] = useState({});
-  const [formValid, setFormValid] = useState(false);
 
   const handleChange = (ingredient, e) => {
     const updatedValues = {
       ...formValues,
-      [ingredient]: e.target.value
+      [ingredient]: e.target.value.trimStart() // Trim only leading spaces
     };
     setFormValues(updatedValues);
-    setFormValid(Object.values(updatedValues).every(value => value)); // Check if all fields are filled out
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const itemsArray = Object.entries(formValues)
-        .filter(([_, value]) => value !== '0') // Filter out items with quantity of 0
-        .map(([name, quantity]) => ({
-            "name": name,
-            "quantity": quantity
-        }));
+      .filter(([_, value]) => value && value !== '0') // Filter out empty or '0' quantities
+      .map(([name, quantity]) => ({
+        name,
+        quantity: quantity.trim() // Ensure trailing spaces are trimmed
+      }));
     if (itemsArray.length > 0) {
-        onSubmit({ shoppingListItems: itemsArray }); // Wrap itemsArray in an object with key shoppingListItems
-        onClose(); // Close the form after submission
+      onSubmit({ shoppingListItems: itemsArray }); // Wrap itemsArray in an object with key shoppingListItems
+      onClose(); // Close the form after submission
     } else {
-        alert('Please fill out all fields before submitting.');
+      alert('Please fill out valid quantities for items before submitting.');
     }
-};
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="add-to-shopping-list-form">
+      <h2>Add Items to Shopping List</h2>
       {ingredients.map((ingredient, index) => (
         <div key={index}>
           <label>
-            {ingredient}:
-            <input type="number" min="0" value={formValues[ingredient] || ''} onChange={(e) => handleChange(ingredient, e)} required />
+            {ingredient.charAt(0).toUpperCase() + ingredient.slice(1)}:
+            <input
+              type="text"
+              value={formValues[ingredient] || ''}
+              onChange={(e) => handleChange(ingredient, e)}
+            />
           </label>
         </div>
       ))}
-      <button type="submit" disabled={!formValid}>Add to Shopping List</button>
+      <button type="submit" className="form-button">Add to Shopping List</button>
+      <button type="button" className="form-button close-button" onClick={onClose}>Close</button>
     </form>
   );
 };
