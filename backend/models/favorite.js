@@ -19,6 +19,17 @@ class Favorite {
     return favoritesRes.rows;
   }
 
+  static async getAllByUser(userId) {
+    const query = `
+      SELECT favorites.id, recipes.title
+      FROM favorites
+      JOIN recipes ON favorites.recipeId = recipes.id
+      WHERE favorites.userId = $1`;
+
+    const favoritesRes = await db.query(query, [userId]);
+    return favoritesRes.rows;
+  }
+
   static async add({ recipeId, userId }) {
     // Check if the recipe is already in favorites for the user
     const existingFavorite = await db.query(

@@ -4,18 +4,23 @@ const FavoriteRecipes = () => {
   const [favoriteRecipes, setFavoriteRecipes] = useState([]);
 
   useEffect(() => {
-    // Fetch favorite recipes from the backend API
     const fetchFavoriteRecipes = async () => {
       try {
-        const response = await fetch('http://localhost:5000/favorites');
+        const token = localStorage.getItem('token'); // Get the token from local storage
+        const response = await fetch('http://localhost:5000/favorites', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch favorite recipes');
         }
         const data = await response.json();
-        setFavoriteRecipes(data.favorite);
+        setFavoriteRecipes(data.favorites); // Update to data.favorites if your API returns { favorites }
 
         // Log the favoriteRecipes array to verify the data
-        console.log(data.favorite);
+        console.log(data.favorites);
       } catch (error) {
         console.error('Error fetching favorite recipes:', error);
       }
@@ -29,10 +34,9 @@ const FavoriteRecipes = () => {
       <h2>Favorite Recipes</h2>
       <ul>
         {favoriteRecipes.map((recipe) => (
-          <li key={recipe.id}> {/* Add key prop */}
+          <li key={recipe.id}>
             <h3>{recipe.title}</h3>
-            <p>{recipe.description}</p>
-            {/* Render other details of the recipe */}
+            {/* Render other details of the recipe if available */}
           </li>
         ))}
       </ul>

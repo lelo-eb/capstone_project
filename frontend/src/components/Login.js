@@ -1,56 +1,67 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate instead of useHistory
 
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+const Login = ({ setIsLoggedIn }) => {
+  const [formData, setFormData] = useState({ username: '', password: '' });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(data => ({
+      ...data,
+      [name]: value
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Add login logic here, such as calling an API endpoint
-      // and handling the response
+      const response = await fetch('http://localhost:5000/auth/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
       
-      // For now, just redirect to the dashboard page after successful login
-      navigate('/dashboard'); // Use navigate instead of history.push
+      if (!response.ok) {
+        throw new Error('Invalid username or password');
+      }
+
+      const data = await response.json();
+      localStorage.setItem('token', data.token);
+      setIsLoggedIn(true);
     } catch (err) {
-      setError(err.message);
+      console.error('Invalid login:', err);
+      alert('Invalid username or password');
     }
   };
 
   return (
-    <div className="login-container">
+    <div>
       <h2>Login</h2>
-      {error && <div className="error">{error}</div>}
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+        <input
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+          placeholder="Username"
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Password"
+          required
+        />
         <button type="submit">Login</button>
       </form>
+      <p>
+        Don't have an account? <a href="/signup">Sign up here</a>
+      </p>
     </div>
   );
 };
 
 export default Login;
-
-

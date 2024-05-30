@@ -1,13 +1,15 @@
 // routes/favoriteRoutes.js
 const express = require('express');
 const Favorite = require('../models/favorite');
+const { ensureLoggedIn } = require('../middleware/auth');
 
 const router = express.Router();
 
-router.get('/', async function (req, res, next) {
+router.get('/', ensureLoggedIn, async function (req, res, next) {
   try {
-    const favorite = await Favorite.getAll(req.params.favoriteId);
-    return res.json({ favorite });
+    const userId = res.locals.user.id;
+    const favorites = await Favorite.getAllByUser(userId);
+    return res.json({ favorites });
   } catch (err) {
     return next(err);
   }

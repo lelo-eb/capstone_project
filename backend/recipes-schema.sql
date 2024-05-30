@@ -1,10 +1,10 @@
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(20) UNIQUE NOT NULL,
-    email VARCHAR(60) UNIQUE NOT NULL,
-    password VARCHAR(20) NOT NULL,
-    firstName VARCHAR(30),
-    lastName VARCHAR(30),
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
     profilePicture VARCHAR,
     bio TEXT,
     joinedOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP

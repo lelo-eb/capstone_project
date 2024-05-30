@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const SignUp = ({ onSignUp }) => {
+const SignUp = ({ setIsLoggedIn }) => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -17,9 +17,28 @@ const SignUp = ({ onSignUp }) => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSignUp(formData);
+    try {
+      const response = await fetch('http://localhost:5000/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+
+      const data = await response.json();
+      localStorage.setItem('token', data.token);
+      setIsLoggedIn(true);
+    } catch (err) {
+      console.error('Registration error:', err);
+      alert('Registration failed');
+    }
   };
 
   return (
@@ -66,6 +85,9 @@ const SignUp = ({ onSignUp }) => {
         />
         <button type="submit">Sign Up</button>
       </form>
+      <p>
+        Already have an account? <a href="/login">Log in here</a>
+      </p>
     </div>
   );
 };

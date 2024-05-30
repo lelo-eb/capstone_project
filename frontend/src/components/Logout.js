@@ -1,12 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Logout = () => {
+const Logout = ({ setIsLoggedIn }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // Perform logout logic here, such as clearing user session or token
-    // For now, let's just redirect to the login page after logout
+    // Clear the token from local storage
+    localStorage.removeItem('token');
+
+    // Update the state to reflect the user is logged out
+    setIsLoggedIn(false);
+
+    // Redirect to the login page
     navigate('/login');
   };
 
