@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+// src/components/Login.js
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import jwt from 'jsonwebtoken';
+import UserContext from '../UserContext';
 
-const Login = ({ setIsLoggedIn }) => {
+const Login = () => {
   const [formData, setFormData] = useState({ username: '', password: '' });
+  const { setIsLoggedIn, setCurrentUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +34,10 @@ const Login = ({ setIsLoggedIn }) => {
 
       const data = await response.json();
       localStorage.setItem('token', data.token);
+      const { username } = jwt.decode(data.token); // Decode token to get username
+      setCurrentUser({ username });
       setIsLoggedIn(true);
+      navigate('/');
     } catch (err) {
       console.error('Invalid login:', err);
       alert('Invalid username or password');

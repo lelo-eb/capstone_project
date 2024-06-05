@@ -17,11 +17,18 @@ function authenticateJWT(req, res, next) {
 
 function ensureLoggedIn(req, res, next) {
   try {
-    if (!res.locals.user) throw new UnauthorizedError();
+    const authHeader = req.headers.authorization;
+    if (!authHeader) throw new UnauthorizedError();
+
+    const token = authHeader.split(' ')[1]; // Assuming Bearer token
+    const payload = jwt.verify(token, SECRET_KEY);
+    res.locals.user = payload; // Attach user info to res.locals
+    console.log('Middleware executed, user:', res.locals.user); // Add this log
+    return next();
   } catch (err) {
-    return next(err);
+    console.log('Middleware error:', err); // Add this log
+    return next(new UnauthorizedError());
   }
-  return next();
 }
 
 module.exports = {

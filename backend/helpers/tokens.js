@@ -4,6 +4,7 @@ const { SECRET_KEY } = require("../config");
 function createToken(user) {
   const payload = {
     username: user.username,
+    id: user.id,
     // Include any other user data needed
   };
 

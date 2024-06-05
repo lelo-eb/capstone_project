@@ -1,7 +1,10 @@
-import React from 'react';
+// src/components/Logout.js
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import UserContext from '../UserContext';
 
-const Logout = ({ setIsLoggedIn }) => {
+const Logout = () => {
+  const { setIsLoggedIn, setCurrentUser } = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -9,6 +12,7 @@ const Logout = ({ setIsLoggedIn }) => {
     localStorage.removeItem('token');
 
     // Update the state to reflect the user is logged out
+    setCurrentUser(null);
     setIsLoggedIn(false);
 
     // Redirect to the login page

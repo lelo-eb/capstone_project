@@ -14,6 +14,7 @@ const favorites = require("./routes/favorites");
 const comments = require("./routes/comments");
 const shoppingListItems = require("./routes/shoppingListItems");
 const authRoutes = require("./routes/auth");
+const { ensureLoggedIn } = require("./middleware/auth");
 
 const morgan = require("morgan");
 
@@ -25,10 +26,10 @@ app.use(morgan("tiny"));
 app.use(authenticateJWT);
 
 app.use("/recipes", recipes);
-app.use("/ratings", ratings);
-app.use("/favorites", favorites);
-app.use("/comments", comments);
-app.use("/shoppingListItems", shoppingListItems);
+app.use("/ratings", ensureLoggedIn, ratings);
+app.use("/favorites", ensureLoggedIn, favorites);
+app.use("/comments", ensureLoggedIn, comments);
+app.use("/shoppingListItems", ensureLoggedIn, shoppingListItems);
 app.use("/auth", authRoutes);
 
 app.get("/", (req, res) => {

@@ -9,7 +9,13 @@ const ShoppingListItems = () => {
     // Fetch shopping list items from the backend
     const fetchShoppingListItems = async () => {
       try {
-        const response = await fetch('http://localhost:5000/shoppingListItems');
+        const token = localStorage.getItem('token');
+        const response = await fetch('http://localhost:5000/shoppingListItems', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch shopping list items');
         }
@@ -24,15 +30,17 @@ const ShoppingListItems = () => {
   }, []);
 
   const handleDeleteItem = async (itemId) => {
-    // Delete the item from the backend
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch(`http://localhost:5000/shoppingListItems/${itemId}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
       if (!response.ok) {
         throw new Error('Failed to delete item');
       }
-      // Remove the item from the local state
       setItems(items.filter(item => item.id !== itemId));
     } catch (error) {
       console.error(error);
@@ -50,17 +58,19 @@ const ShoppingListItems = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { name, quantity } = formValues;
-    
+
     if (!name || !quantity || quantity === '0') {
       alert('Please provide a valid name and quantity greater than 0.');
       return;
     }
 
     try {
+      const token = localStorage.getItem('token');
       const response = await fetch('http://localhost:5000/shoppingListItems', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ shoppingListItems: [{ name, quantity }] }),
       });
@@ -70,16 +80,11 @@ const ShoppingListItems = () => {
       }
 
       const newItem = await response.json();
-      setItems([...items, ...newItem.items]); // Append the new item to the list
-      setFormValues({ name: '', quantity: '' }); // Clear the form
+      setItems([...items, ...newItem.items]);
+      setFormValues({ name: '', quantity: '' });
     } catch (error) {
       console.error(error);
     }
-  };
-
-  // Utility function to capitalize the first letter of a string
-  const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   return (
@@ -92,7 +97,7 @@ const ShoppingListItems = () => {
           <ul>
             {items.map(item => (
               <li key={item.id}>
-                <strong>{capitalizeFirstLetter(item.name)}</strong>: {item.quantity}
+                <strong>{item.name}</strong>: {item.quantity}
                 <button onClick={() => handleDeleteItem(item.id)}>Delete</button>
               </li>
             ))}

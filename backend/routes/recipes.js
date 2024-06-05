@@ -1,17 +1,19 @@
 // routes/recipeRoutes.js
 const express = require('express');
 const Recipe = require('../models/recipe');
+const { ensureLoggedIn } = require('../middleware/auth');
 
 const router = express.Router();
 
 router.get('/', async function (req, res, next) {
   try {
-    const recipe = await Recipe.getAll(req.params.recipeId);
-    return res.json({ recipe });
+    const recipes = await Recipe.getAll();
+    return res.json({ recipes });
   } catch (err) {
     return next(err);
   }
 });
+
 router.get('/:id', async (req, res, next) => {
   try {
     const recipeId = req.params.id;
@@ -24,15 +26,19 @@ router.get('/:id', async (req, res, next) => {
     next(err);
   }
 });
-router.post('/', async function (req, res, next) {
+
+router.post('/', ensureLoggedIn, async (req, res, next) => {
   try {
-    const recipe = await Recipe.create(req.body);
-    return res.status(201).json({ recipe });
+    console.log('Route handler executed'); // Add this log
+    const { title, picture, description, ingredients, instructions } = req.body;
+    const createdBy = res.locals.user.id;
+    console.log('User ID:', createdBy); // Add this log
+    const newRecipe = await Recipe.create({ title, picture, description, ingredients, instructions, createdBy });
+    return res.status(201).json({ recipe: newRecipe });
   } catch (err) {
+    console.log('Route handler error:', err); // Add this log
     return next(err);
   }
 });
-
-// Add other recipe routes as needed
 
 module.exports = router;

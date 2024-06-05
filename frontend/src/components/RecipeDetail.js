@@ -27,25 +27,24 @@ const RecipeDetail = () => {
 
   const handleAddToShoppingList = async (items) => {
     try {
-        console.log('Items JSON:', JSON.stringify(items, null, 4));
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:5000/shoppingListItems', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ shoppingListItems: items }),
+      });
 
-        const response = await fetch('http://localhost:5000/shoppingListItems', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(items, null, 4), // Convert items to JSON string with 4 spaces indentation
-        });
+      if (!response.ok) {
+        throw new Error('Failed to add items to shopping list');
+      }
 
-        if (!response.ok) {
-            throw new Error('Failed to add items to shopping list');
-        }
-
-        // Assuming the response contains the newly created item
-        const newItem = await response.json();
-        console.log('Added item to shopping list:', newItem);
+      const newItem = await response.json();
+      console.log('Added item to shopping list:', newItem);
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
   };
 

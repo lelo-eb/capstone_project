@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+// src/components/SignUp.js
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import jwt from 'jsonwebtoken';
+import UserContext from '../UserContext';
 
-const SignUp = ({ setIsLoggedIn }) => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -8,6 +12,8 @@ const SignUp = ({ setIsLoggedIn }) => {
     lastName: '',
     email: ''
   });
+  const { setIsLoggedIn, setCurrentUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,7 +40,10 @@ const SignUp = ({ setIsLoggedIn }) => {
 
       const data = await response.json();
       localStorage.setItem('token', data.token);
+      const { username } = jwt.decode(data.token); // Decode token to get username
+      setCurrentUser({ username });
       setIsLoggedIn(true);
+      navigate('/');
     } catch (err) {
       console.error('Registration error:', err);
       alert('Registration failed');
