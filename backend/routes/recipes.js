@@ -29,14 +29,14 @@ router.get('/:id', async (req, res, next) => {
 
 router.post('/', ensureLoggedIn, async (req, res, next) => {
   try {
-    console.log('Route handler executed'); // Add this log
+    console.log('Route handler executed'); // Log for route handler execution
     const { title, picture, description, ingredients, instructions } = req.body;
-    const createdBy = res.locals.user.id;
-    console.log('User ID:', createdBy); // Add this log
+    const createdBy = res.locals.user.id; // Access userId from res.locals.user
+    console.log('User ID:', createdBy); // Log the userId to verify its presence
     const newRecipe = await Recipe.create({ title, picture, description, ingredients, instructions, createdBy });
     return res.status(201).json({ recipe: newRecipe });
   } catch (err) {
-    console.log('Route handler error:', err); // Add this log
+    console.log('Route handler error:', err); // Log any errors
     return next(err);
   }
 });
