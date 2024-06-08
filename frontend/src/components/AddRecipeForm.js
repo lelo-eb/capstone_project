@@ -1,7 +1,10 @@
 // AddRecipeForm.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import UserContext from '../UserContext';
 
 const AddRecipeForm = ({ onClose, onSubmit }) => {
+  const { currentUser } = useContext(UserContext);
+  
   const [formValues, setFormValues] = useState({
     title: '',
     picture: '',
@@ -9,6 +12,7 @@ const AddRecipeForm = ({ onClose, onSubmit }) => {
     ingredients: '',
     instructions: ''
   });
+
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -29,7 +33,7 @@ const AddRecipeForm = ({ onClose, onSubmit }) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
-      onSubmit(formValues);
+      onSubmit({ ...formValues, createdBy: currentUser.id });
     } else {
       setErrors(validationErrors);
     }

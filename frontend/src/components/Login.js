@@ -34,7 +34,10 @@ const Login = () => {
 
       const data = await response.json();
       localStorage.setItem('token', data.token);
+      localStorage.setItem('token', data.token);
+      console.log("Stored token:", data.token); // Add this line
       const { username } = jwt.decode(data.token); // Decode token to get username
+      console.log("Decoded username:", username);
       setCurrentUser({ username });
       setIsLoggedIn(true);
       navigate('/');
