@@ -22,6 +22,19 @@ router.post('/', async function (req, res, next) {
     return next(err);
   }
 });
+router.delete('/:id', async function (req, res, next) {
+  try {
+    const userId = res.locals.user.id;
+    const { id } = req.params; // Extract recipeId from params
+    const deletedFavorite = await Favorite.delete({ id, userId }); // Pass recipeId as an object
+    if (!deletedFavorite) {
+      return res.status(404).json({ error: 'Favorite not found' });
+    }
+    return res.status(200).json({ message: 'Favorite deleted', id: deletedFavorite.id });
+  } catch (err) {
+    return next(err);
+  }
+});
 
 // Add other favorite routes as needed
 

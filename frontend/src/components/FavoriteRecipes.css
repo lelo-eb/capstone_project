@@ -1,0 +1,36 @@
+.favorite-recipes-container {
+    margin-top: 20px;
+  }
+  
+  .favorite-recipes-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .favorite-recipe-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .favorite-recipe-item h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 1.2em;
+  }
+  
+  .remove-button {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .remove-button:hover {
+    background-color: #cc0000;
+  }
+  

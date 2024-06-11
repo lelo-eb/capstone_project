@@ -21,7 +21,7 @@ const AddToShoppingListForm = ({ ingredients, onSubmit, onClose }) => {
         quantity: quantity.trim() // Ensure trailing spaces are trimmed
       }));
     if (itemsArray.length > 0) {
-      onSubmit({ shoppingListItems: itemsArray }); // Wrap itemsArray in an object with key shoppingListItems
+      onSubmit(itemsArray); // Pass itemsArray to onSubmit function
       onClose(); // Close the form after submission
     } else {
       alert('Please fill out valid quantities for items before submitting.');

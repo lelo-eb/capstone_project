@@ -8,6 +8,7 @@ const RecipeList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [showRefreshAlert, setShowRefreshAlert] = useState(false);
 
   useEffect(() => {
     const fetchRecipes = async () => {
@@ -18,6 +19,7 @@ const RecipeList = () => {
         }
         const data = await response.json();
         setRecipes(data.recipes);
+        setFilteredRecipes(data.recipes); // Initialize filteredRecipes with all recipes
       } catch (error) {
         console.error(error);
       }
@@ -27,12 +29,10 @@ const RecipeList = () => {
   }, []);
 
   useEffect(() => {
-    if (Array.isArray(recipes)) {
-      const filtered = recipes.filter(recipe =>
-        recipe.recipe_title && recipe.recipe_title.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredRecipes(filtered);
-    }
+    const filtered = recipes.filter(recipe =>
+      recipe.recipe_title && recipe.recipe_title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredRecipes(filtered);
   }, [recipes, searchTerm]);
 
   const handleSearchChange = (event) => {
@@ -58,14 +58,16 @@ const RecipeList = () => {
         },
         body: JSON.stringify(formValues)
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to add recipe');
       }
-  
+
       const newRecipe = await response.json();
       setRecipes(prevRecipes => [...prevRecipes, newRecipe.recipe]);
       setShowForm(false);
+      setShowRefreshAlert(true);
+      console.log('New recipe added:', newRecipe.recipe);
     } catch (error) {
       console.error('Form submit error:', error);
     }
@@ -77,8 +79,13 @@ const RecipeList = () => {
 
   return (
     <div className="dashboard">
+      {showRefreshAlert && (
+        <div className="alert">
+          <span>Recipe added successfully! Refresh the page to see your recipe.</span>
+        </div>
+      )}
       <div className="header">
-        <button onClick={handleAddRecipeClick}>Add Recipe</button>
+        <button className="add-recipe-button" onClick={handleAddRecipeClick}>Add Recipe</button>
         <div className="search-container">
           <input
             type="text"
@@ -96,14 +103,14 @@ const RecipeList = () => {
           <p>Sorry, there are no results matching your search.</p>
         ) : (
           filteredRecipes.map(recipe => (
-            <div key={recipe.recipe_id} className="recipe-card">
-              <Link to={`/recipes/${recipe.recipe_id}`} style={{ textDecoration: 'none' }}>
+            <div key={recipe.recipe_id || recipe.id} className="recipe-card">
+              <Link to={`/recipes/${recipe.recipe_id || recipe.id}`} style={{ textDecoration: 'none' }}>
                 <div className="recipe-image">
-                  <img src={recipe.recipe_picture} alt={recipe.recipe_title} />
+                  <img src={recipe.recipe_picture || recipe.picture} alt={recipe.recipe_title || recipe.title} />
                 </div>
                 <div className="recipe-details">
-                  <h3>{recipe.recipe_title}</h3>
-                  <p>By: {recipe.created_by_username}</p>
+                  <h3>{recipe.recipe_title || recipe.title}</h3>
+                  <p>By: {recipe.created_by_username || recipe.createdby}</p>
                   <p>Average Rating: {recipe.average_rating ? parseFloat(recipe.average_rating).toFixed(2) : 'None'}</p>
                 </div>
               </Link>

@@ -1,11 +1,11 @@
-/* RecipeDetail.css */
 .recipe-detail-container {
   max-width: 800px;
-  margin: 20px auto; /* Add more space between content and navbar */
+  margin: 20px auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .recipe-title {
@@ -17,9 +17,9 @@
 }
 
 .recipe-image {
-  width: 100%; /* Make image responsive */
-  max-height: 300px; /* Adjust max height for better display */
-  object-fit: contain; /* Display the entire image */
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
   border-radius: 10px;
   margin-bottom: 20px;
 }
@@ -80,7 +80,6 @@
   color: #666;
 }
 
-/* New CSS for the "Add items to shopping list" button */
 .add-to-shopping-list-button {
   display: inline-block;
   padding: 10px 20px;
@@ -92,10 +91,65 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 20px; /* Add some space above the button */
-  text-align: center; /* Center text in the button */
+  margin-top: 20px;
+  text-align: center;
 }
 
 .add-to-shopping-list-button:hover {
   background-color: #0056b3;
+}
+
+.add-to-favorites-button {
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+  width: calc(100% - 40px);
+  margin: 20px auto 0 auto;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.add-to-favorites-button:hover {
+  background-color: #0056b3;
+}
+
+.success-message {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 800px;
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  font-size: 18px;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: slideDown 0.3s ease-out, fadeOut 3s forwards 2.7s;
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translate(-50%, -100%);
+  }
+  100% {
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

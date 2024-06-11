@@ -58,13 +58,15 @@ class Favorite {
    *
    * data should be { recipeId, userId }
    **/
-  static async remove({ recipeId, userId }) {
-    const result = await db.query(
-      `DELETE FROM favorites
-       WHERE recipeId = $1 AND userId = $2`,
-      [recipeId, userId],
-    );
-    if (result.rowCount === 0) throw new NotFoundError(`No favorite found`);
+  static async delete({ id, userId }) {
+    const query = `
+      DELETE FROM favorites
+       WHERE id = $1 AND userId = $2
+       RETURNING id`;
+    
+    const result = await db.query(query, [id, userId]);
+    const deletedFavorite = result.rows[0];
+    return deletedFavorite;
   }
 }
 
