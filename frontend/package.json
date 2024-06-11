@@ -47,6 +47,9 @@
     "util": "^0.12.5",
     "vm-browserify": "^1.1.2"
   },
+  "engines": {
+    "node": "16.20.2"
+  },
   "resolutions": {
     "//": "See https://github.com/facebook/create-react-app/issues/11773",
     "react-error-overlay": "6.0.9"
