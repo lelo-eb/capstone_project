@@ -31,8 +31,8 @@ function App() {
       })
       .then(response => {
         if (response.ok) {
-          const { username } = jwt.decode(token);
-          setCurrentUser({ username });
+          const { username, id } = jwt.decode(token);
+          setCurrentUser({ username, id });
           setIsLoggedIn(true);
         } else {
           localStorage.removeItem('token');
@@ -58,8 +58,8 @@ function App() {
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem('token', data.token);
-        const { username } = jwt.decode(data.token);
-        setCurrentUser({ username });
+        const { username, id } = jwt.decode(data.token);
+        setCurrentUser({ username, id });
         setIsLoggedIn(true);
         return { success: true };
       } else {
@@ -84,8 +84,8 @@ function App() {
       const data = await response.json();
       if (response.ok) {
         localStorage.setItem('token', data.token);
-        const { username } = jwt.decode(data.token);
-        setCurrentUser({ username });
+        const { username, id } = jwt.decode(data.token);
+        setCurrentUser({ username, id });
         setIsLoggedIn(true);
         return { success: true };
       } else {

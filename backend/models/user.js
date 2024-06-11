@@ -7,13 +7,14 @@ const { BadRequestError, UnauthorizedError, NotFoundError } = require("../expres
 class User {
   /** Authenticate user with username, password.
    *
-   * Returns { username, firstName, lastName, email, profilePicture, bio }
+   * Returns { id, username, firstName, lastName, email, profilePicture, bio }
    *
    * Throws UnauthorizedError if user not found or wrong password.
    **/
   static async authenticate(username, password) {
     const query = `
       SELECT
+        u.id,
         u.username,
         u.firstName,
         u.lastName,
@@ -31,6 +32,7 @@ class User {
     if (user && await bcrypt.compare(password, user.password)) {
       delete user.password;
       return {
+        id: user.id, // Ensure id is returned
         username: user.username,
         firstName: user.firstName,
         lastName: user.lastName,
@@ -45,7 +47,7 @@ class User {
 
   /** Register user with data.
    *
-   * Returns { username, firstName, lastName, email, profilePicture, bio }
+   * Returns { id, username, firstName, lastName, email, profilePicture, bio }
    *
    * Throws BadRequestError on duplicates.
    **/
@@ -70,7 +72,7 @@ class User {
       INSERT INTO users
       (username, password, firstName, lastName, email)
       VALUES ($1, $2, $3, $4, $5)
-      RETURNING username, firstName, lastName, email, profilePicture, bio, joinedOn
+      RETURNING id, username, firstName, lastName, email, profilePicture, bio, joinedOn
     `;
     const result = await db.query(insertUserQuery, [
       username,
@@ -87,14 +89,14 @@ class User {
 
   /** Given a username, return data about user.
    *
-   * Returns { username, firstName, lastName, email, profilePicture, bio }
-   *   (note: no password)
+   * Returns { id, username, firstName, lastName, email, profilePicture, bio, joinedOn }
    *
    * Throws NotFoundError if user not found.
    **/
   static async getByUsername(username) {
     const result = await db.query(
-      `SELECT username,
+      `SELECT id,
+              username,
               firstName,
               lastName,
               email,

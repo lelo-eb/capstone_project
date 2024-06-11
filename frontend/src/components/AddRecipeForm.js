@@ -4,7 +4,9 @@ import UserContext from '../UserContext';
 
 const AddRecipeForm = ({ onClose, onSubmit }) => {
   const { currentUser } = useContext(UserContext);
-  
+
+  console.log("currentUser in AddRecipeForm: ", currentUser); // Debugging
+
   const [formValues, setFormValues] = useState({
     title: '',
     picture: '',
@@ -33,7 +35,11 @@ const AddRecipeForm = ({ onClose, onSubmit }) => {
     e.preventDefault();
     const validationErrors = validate();
     if (Object.keys(validationErrors).length === 0) {
-      onSubmit({ ...formValues, createdBy: currentUser.id });
+      if (currentUser && currentUser.id) {
+        onSubmit({ ...formValues, createdBy: currentUser.id });
+      } else {
+        console.error('currentUser or currentUser.id is null');
+      }
     } else {
       setErrors(validationErrors);
     }

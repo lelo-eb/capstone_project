@@ -40,8 +40,8 @@ const SignUp = () => {
 
       const data = await response.json();
       localStorage.setItem('token', data.token);
-      const { username } = jwt.decode(data.token); // Decode token to get username
-      setCurrentUser({ username });
+      const { username, id } = jwt.decode(data.token); // Decode token to get username
+      setCurrentUser({ username, id });
       setIsLoggedIn(true);
       navigate('/');
     } catch (err) {
