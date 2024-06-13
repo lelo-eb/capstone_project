@@ -20,7 +20,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/auth/token', {
+      const response = await fetch('https://capstone-project-6w7t.onrender.com/auth/token', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

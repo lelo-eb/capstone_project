@@ -23,7 +23,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      fetch('http://localhost:5000/auth/verify-token', {
+      fetch('https://capstone-project-6w7t.onrender.com/auth/verify-token', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -47,7 +47,7 @@ function App() {
 
   const login = async (loginData) => {
     try {
-      const response = await fetch('http://localhost:5000/auth/login', {
+      const response = await fetch('https://capstone-project-6w7t.onrender.com/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -73,7 +73,7 @@ function App() {
 
   const signup = async (signupData) => {
     try {
-      const response = await fetch('http://localhost:5000/auth/signup', {
+      const response = await fetch('https://capstone-project-6w7t.onrender.com/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

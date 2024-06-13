@@ -10,7 +10,7 @@ const ShoppingListItems = () => {
     const fetchShoppingListItems = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/shoppingListItems', {
+        const response = await fetch('https://capstone-project-6w7t.onrender.com/shoppingListItems', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -32,7 +32,7 @@ const ShoppingListItems = () => {
   const handleDeleteItem = async (itemId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5000/shoppingListItems/${itemId}`, {
+      const response = await fetch(`https://capstone-project-6w7t.onrender.com/shoppingListItems/${itemId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -66,7 +66,7 @@ const ShoppingListItems = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/shoppingListItems', {
+      const response = await fetch('https://capstone-project-6w7t.onrender.com/shoppingListItems', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
