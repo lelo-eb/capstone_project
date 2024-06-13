@@ -13,7 +13,7 @@ const RecipeList = () => {
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch('https://capstone-project-6w7t.onrender.com/recipes');
+        const response = await fetch('https://capstone-project-5-e3an.onrender.com/recipes');
         if (!response.ok) {
           throw new Error('Failed to fetch recipes');
         }
@@ -50,7 +50,7 @@ const RecipeList = () => {
   const handleFormSubmit = async (formValues) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://capstone-project-6w7t.onrender.com/recipes', {
+      const response = await fetch('https://capstone-project-5-e3an.onrender.com/recipes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

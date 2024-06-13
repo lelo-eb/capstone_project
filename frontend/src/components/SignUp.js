@@ -26,7 +26,7 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('https://capstone-project-6w7t.onrender.com/auth/register', {
+      const response = await fetch('https://capstone-project-5-e3an.onrender.com/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

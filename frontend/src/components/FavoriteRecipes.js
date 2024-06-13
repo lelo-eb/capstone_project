@@ -8,7 +8,7 @@ const FavoriteRecipes = () => {
     const fetchFavoriteRecipes = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('https://capstone-project-6w7t.onrender.com/favorites', {
+        const response = await fetch('https://capstone-project-5-e3an.onrender.com/favorites', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
@@ -30,7 +30,7 @@ const FavoriteRecipes = () => {
   const handleRemoveFavorite = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://capstone-project-6w7t.onrender.com/favorites/${id}`, {
+      const response = await fetch(`https://capstone-project-5-e3an.onrender.com/favorites/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

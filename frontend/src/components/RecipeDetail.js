@@ -13,7 +13,7 @@ const RecipeDetail = () => {
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
-        const recipeResponse = await fetch(`https://capstone-project-6w7t.onrender.com/recipes/${id}`);
+        const recipeResponse = await fetch(`https://capstone-project-5-e3an.onrender.com/recipes/${id}`);
         if (!recipeResponse.ok) {
           throw new Error('Failed to fetch recipe');
         }
@@ -38,7 +38,7 @@ const RecipeDetail = () => {
   const handleAddToShoppingList = async (items) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('https://capstone-project-6w7t.onrender.com/shoppingListItems', {
+      const response = await fetch('https://capstone-project-5-e3an.onrender.com/shoppingListItems', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ const RecipeDetail = () => {
       const token = localStorage.getItem('token');
       const userId = JSON.parse(atob(token.split('.')[1])).id;
 
-      const response = await fetch('https://capstone-project-6w7t.onrender.com/favorites', {
+      const response = await fetch('https://capstone-project-5-e3an.onrender.com/favorites', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,7 +106,7 @@ const RecipeDetail = () => {
       // If the user hasn't rated the recipe, proceed with rating
       const token = localStorage.getItem('token');
       const userId = JSON.parse(atob(token.split('.')[1])).id;
-      const response = await fetch('https://capstone-project-6w7t.onrender.com/ratings', {
+      const response = await fetch('https://capstone-project-5-e3an.onrender.com/ratings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
